@@ -66,10 +66,27 @@ mcp = FastMCP(name="Cloudera ML MCP Server")
 
 # Get configuration from environment variables
 def get_config():
-    return {
-        "host": os.environ.get("CLOUDERA_ML_HOST", ""),
-        "api_key": os.environ.get("CLOUDERA_ML_API_KEY", "")
+    host = os.environ.get("CLOUDERA_ML_HOST", "")
+    if not host and os.environ.get("CDSW_DOMAIN"):
+        host = f"https://{os.environ.get('CDSW_DOMAIN')}"
+        
+    api_key = os.environ.get("CLOUDERA_ML_API_KEY", "")
+    if not api_key and os.environ.get("CDSW_APIV2_KEY"):
+        api_key = os.environ.get("CDSW_APIV2_KEY")
+        
+    config = {
+        "host": host,
+        "api_key": api_key
     }
+    
+    project_id = os.environ.get("CLOUDERA_ML_PROJECT_ID", "")
+    if not project_id and os.environ.get("CDSW_PROJECT_ID"):
+        project_id = os.environ.get("CDSW_PROJECT_ID")
+        
+    if project_id:
+        config["project_id"] = project_id
+        
+    return config
 
 # Register functions as MCP tools
 @mcp.tool()
