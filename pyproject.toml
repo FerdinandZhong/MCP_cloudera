@@ -13,4 +13,12 @@ dependencies = [
 
 [project.scripts]
 cloudera-ml-mcp-server = "server:mcp.run"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["src"]
+py-modules = ["server"]
  
