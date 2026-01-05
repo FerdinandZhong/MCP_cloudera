@@ -9,4 +9,8 @@ dependencies = [
     "pathlib>=1.0.1",
     "python-dotenv>=1.0.0",
     "mcp[cli]>=1.6.0",
-] 
+]
+
+[project.scripts]
+cloudera-ml-mcp-server = "server:mcp.run"
+ 
